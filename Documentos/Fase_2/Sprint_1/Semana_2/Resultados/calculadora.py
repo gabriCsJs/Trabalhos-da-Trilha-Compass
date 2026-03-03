@@ -1,10 +1,12 @@
-def verifica(primeiroValor=False, denominadorDivisao=False):
-    m1 = "insira um valor(exit para sair): "
-    m2 = "insira o primeiro valor(exit para sair): "
+def verifica(primeiroValor=False, Bloqueia0=False,Imc = str):
     if primeiroValor == True: 
-        mensagem = m2 
+        mensagem = "insira o primeiro valor(exit para sair): " 
     else: 
-        mensagem = m1
+        mensagem = "insira um valor(exit para sair): "
+    if Imc == "peso":
+        mensagem = "insira o seu peso"
+    elif Imc == "altura":
+        mensagem = "insira a sua altura"
     while True:
         while True: #forca o usuario a digitar algo
             UserTerminal = input(mensagem).lower()
@@ -13,13 +15,15 @@ def verifica(primeiroValor=False, denominadorDivisao=False):
             else:
                 #return UserTerminal
                 break
+        if "," in UserTerminal:
+            UserTerminal = UserTerminal.replace(",", ".")
         if primeiroValor == False or UserTerminal == "exit": #verifica se é primeiroValor ou se é o comando exit para sair
             if UserTerminal in ["exit", "apagar", "visualizar", "status"]: 
                 return UserTerminal
                 #break
         try: #verifica se é um numero
             a = float(UserTerminal)
-            if denominadorDivisao == True:
+            if Bloqueia0 == True:
                 if a == 0:
                     print("nao e possivel dividir por zero tente novamente")
                     continue
@@ -51,6 +55,7 @@ def subtracao():
         primeiroValor = verifica(True)
         total = 0
         frist = True
+        #valor = verifica(False, True)
         while True:
             #Verificacao
             valor = verifica(False, True)  #adiconar valor
@@ -98,7 +103,7 @@ def divisao():
         frist = True
         while True: #inifinidade
             #Verificacao
-            valor = verifica(primeiroValor=False, denominadorDivisao=True)  #adiconar valor
+            valor = verifica(primeiroValor=False, Bloqueia0=True)  #adiconar valor
 
             if valor == "exit":
                 print(f"o valor final é: {total}")
@@ -117,6 +122,30 @@ def divisao():
                 else:
                     total /= valor
         break
+def imc():
+    peso = verifica(primeiroValor=False, Bloqueia0=True,Imc="peso")
+    altura = verifica(primeiroValor=False, Bloqueia0=True,Imc="altura")
+    ImcReal = peso / (altura **2)
+    total = round(ImcReal,2)
+    if total < 17:
+        print("muito abaixo do peso")
+    elif total < 18.5:
+        print("abaixo do peso")
+    elif total < 25:
+        print("peso normal")
+    elif total < 30:
+        print("acima do peso")
+    elif total < 35:
+        print("obesidade I")
+    elif total < 40:
+        print("obesidade II")
+    else:
+        print("obesidade III")
+    print(f"seu Imc é:{total}")
+
+def Jcompostos():
+    print("")
+
 while True:
     resposta = input("selecione uma operacao(soma, subtracao, divisao, multiplicacao, juros compostos, imc) ou exit para sair: ").lower()
 
@@ -129,8 +158,8 @@ while True:
     elif resposta == "multiplicacao":
         multiplicacao()
     elif resposta == "juros compostos":
-        soma()
+        Jcompostos()
     elif resposta == "imc":
-        soma()
+        imc()
     elif resposta == "exit":
         break
