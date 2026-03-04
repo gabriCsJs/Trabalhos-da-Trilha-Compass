@@ -1,4 +1,4 @@
-class calculadora:
+class calcula:
     def divisao(self,a,b):
         if b == 0:
             return "o denominador nao pode ser 0"
