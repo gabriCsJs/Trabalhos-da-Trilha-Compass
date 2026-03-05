@@ -6,7 +6,7 @@
 | Subtracao      |
 | multiplicacao      |
 | Divisao      |
-| Juros compostos |
-| IMC |
+| resto |
+| potenciacao |
 
-## Como funciona o codigo?
+Fazer 3 testes para cada
