@@ -1,3 +1,7 @@
+# Observação
+Durante o desenvolvimento eu desenvolvi outra calculadora mais complexa porem como eu estava atrasado no curso de pytest eu nao consegui
+desenvolver os testes dela a tempo entao optei por desenvolver essa calculadora mais basica e entregar o trabalho por isso
+Este código foi desenvolvido com foco em **simplicidade e tratamento básico de erros**
 
 
 # Calculadora em Python
@@ -225,11 +229,6 @@ print(calc.potencia(2,3))
 ```
 
 ---
-
-# Observação
-Durante o desenvolvimento eu desenvolvi outra calculadora mais complexa porem como eu estava atrasado no curso de pytest eu nao consegui
-desenvolver os testes dela a tempo entao optei por desenvolver essa calculadora mais basica e entregar o trabalho por isso
-Este código foi desenvolvido com foco em **simplicidade e tratamento básico de erros**
 
 # Como vou evoluir
 Irei estudar mais pytest com o objetivo de conseguir implementar os testes na minha calculadora original
