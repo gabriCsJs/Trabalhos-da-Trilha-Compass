@@ -1,0 +1,67 @@
+Challenge 3: Git + Robot Framework — Testes de API REST na ServeRest
+
+
+Descritivo
+
+O objetivo deste desafio é aplicar, na prática, os conhecimentos adquiridos de Git e Robot Framework para testar uma API REST.
+Você irá planejar e executar testes, registrar bugs, e automatizar checks essenciais usando o Robot Framework, versionando tudo com um fluxo de Git organizado (branches, commits, PR/MR, tags).
+
+API alvo: https://compassuol.serverest.dev/
+
+Atividades Obrigatórias
+1) Organização com Git (versionamento “de verdade”)
+
+Você deve manter todo o trabalho em um repositório Git (GitHub/GitLab/Bitbucket ou equivalente), contendo:
+
+Repositório com README.md explicando:
+- objetivo do projeto
+- como instalar dependências
+- como executar os testes
+- como visualizar evidências (reports/logs)
+
+Fluxo mínimo de Git:
+- criar branch a partir da main (ex.: feature/tests-api)
+- realizar commits pequenos e frequentes (mensagens claras)
+- abrir PR/MR para merge na main (mesmo que seja você sozinho)
+- criar tag de release (ex.: v1.0-challenge2) ao final
+
+Organização sugerida:
+- .gitignore adequado
+- estrutura de pastas clara para testes e evidências
+
+Dica (não obrigatório): use um padrão de commit (ex.: feat:, test:, fix:, docs:).
+
+2) Checks Automatizados com Robot Framework (API REST)
+Criar uma suíte de testes em Robot Framework para validar checks essenciais na ServeRest.
+
+Requisitos mínimos da automação:
+- Pelo menos 6 casos automatizados, cobrindo:
+- 1 cenário positivo
+- 1 cenário negativo
+- 1 validação de contrato básico (estrutura/campos obrigatórios)
+
+Boas práticas mínimas:
+- separar recursos (ex.: resources/keywords.resource)
+- usar variáveis (variables/ ou seção *** Variables ***)
+- usar Suite Setup/Teardown ou Test Setup/Teardown quando fizer sentido
+
+A automação deve ser simples (não precisa framework robusto), mas bem organizada.
+
+Forma de Entrega
+Entrega técnica (via Moodle)
+Você deve enviar:
+- Link do repositório (ou arquivo zip do repo, se solicitado)
+- Um PDF contendo:
+-> plano de testes (ou resumo do plano + lista de cenários executados)
+-> evidências das execuções (prints/JSON/logs)
+-> lista de bugs encontrados (ou link/print das Issues)
+-> explicação sucinta dos checks automatizados (o que validam e como rodar)
+-> instruções de execução (também presentes no README)
+
+Apresentação (até 5 minutos)
+Apresentar diretamente sobre os artefatos (sem PPT obrigatório):
+- visão rápida do repositório e organização
+- exemplo do fluxo Git (branch/commits/PR/tag)
+- principais testes executados e 1–2 evidências
+- principais bugs encontrados (1–2 exemplos)
+- demonstração rápida rodando a suíte Robot (se fez o extra)"
