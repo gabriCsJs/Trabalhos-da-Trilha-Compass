@@ -20,22 +20,29 @@ Buscar Usuario por ID
     RETURN   ${response.json()}
 
 #-------------POST-------------#
-Cadastrar Cliente e guardar Id
-    [Arguments]    ${nome}=Cliente    ${email}=Cliente@email.com    ${password}=123456    ${administrador}=false    ${Status_Code}=201
+# Cadastrar Usuario
+#     [Arguments]    ${nome}=Cliente    ${email}=Cliente@email.com    ${password}=123456  ${administrador}=false   ${Status_Code}=201
+    
+#     &{Body}    Create Dictionary    nome=${nome}    email=${email}    password=${password}    administrador=${administrador}
+#     ${response}=  POST On Session    alias=Serverest    url=${ROTA_USUARIOS}    json=&{Body}    expected_status=${Status_Code}
+
+#     RETURN   ${response.json()}[_id]  ${Body}[email]  ${Body}[password]
+Cadastrar Usuario
+    [Arguments]    ${nome}=Cliente    ${email}=Cliente@email.com    ${password}=123456    
+    ...            ${administrador}=false    ${Status_Code}=201    ${ALEATORIO}=${false}    ${Tamanho}=10
+    IF    ${ALEATORIO} == ${true}
+        ${nome}               Generate Random String    length=${Tamanho}    chars=[LETTERS]
+        ${prefixo_email}      Generate Random String    length=8             chars=[LOWER]
+        ${email}              Set Variable              ${prefixo_email}@email.com
+        ${password}           Generate Random String    length=6             chars=[NUMBERS]
+    END
     
     &{Body}    Create Dictionary    nome=${nome}    email=${email}    password=${password}    administrador=${administrador}
-    ${response}=  POST On Session    alias=Serverest    url=${ROTA_USUARIOS}    json=&{Body}    expected_status=${Status_Code}
-
-    RETURN   ${response.json()}[_id]  ${Body}[email]  ${Body}[password]
-
-Cadastrar Adm e guardar Id
-    [Arguments]    ${nome}=Administrador    ${email}=Administrador@email.com    ${password}=123456    ${administrador}=true    ${Status_Code}=201
     
-    &{Body}    Create Dictionary    nome=${nome}    email=${email}    password=${password}    administrador=${administrador}
+    ${response}=    POST On Session    alias=Serverest    url=${ROTA_USUARIOS}    json=${Body}    expected_status=${Status_Code}
 
-    ${response}=  POST On Session  alias=Serverest  url=${ROTA_USUARIOS}    json=&{Body}    expected_status=${Status_Code}
-    RETURN   ${response.json()}[_id]  ${Body}[email]  ${Body}[password]
-
+    RETURN    ${response.json()}[_id]    ${Body}[email]    ${Body}[password]
+    
 #-------------PUT-------------#
 Editar Usuario    
     [Arguments]    ${id}    ${nome}=Usuario Editado    ${email}=editado@email.com    ${password}=123456    ${administrador}=false    ${Status_Code}=200
