@@ -20,13 +20,6 @@ Buscar Usuario por ID
     RETURN   ${response.json()}
 
 #-------------POST-------------#
-# Cadastrar Usuario
-#     [Arguments]    ${nome}=Cliente    ${email}=Cliente@email.com    ${password}=123456  ${administrador}=false   ${Status_Code}=201
-    
-#     &{Body}    Create Dictionary    nome=${nome}    email=${email}    password=${password}    administrador=${administrador}
-#     ${response}=  POST On Session    alias=Serverest    url=${ROTA_USUARIOS}    json=&{Body}    expected_status=${Status_Code}
-
-#     RETURN   ${response.json()}[_id]  ${Body}[email]  ${Body}[password]
 Cadastrar Usuario
     [Arguments]    ${nome}=Cliente    ${email}=Cliente@email.com    ${password}=123456    
     ...            ${administrador}=false    ${Status_Code}=201    ${ALEATORIO}=${false}    ${Tamanho}=10
@@ -40,9 +33,9 @@ Cadastrar Usuario
     &{Body}    Create Dictionary    nome=${nome}    email=${email}    password=${password}    administrador=${administrador}
     
     ${response}=    POST On Session    alias=Serverest    url=${ROTA_USUARIOS}    json=${Body}    expected_status=${Status_Code}
-
-    RETURN    ${response.json()}[_id]    ${Body}[email]    ${Body}[password]
-    
+    IF    ${Status_Code}==201
+        RETURN    ${response.json()}[_id]    ${Body}[email]    ${Body}[password]
+    END
 #-------------PUT-------------#
 Editar Usuario    
     [Arguments]    ${id}    ${nome}=Usuario Editado    ${email}=editado@email.com    ${password}=123456    ${administrador}=false    ${Status_Code}=200
@@ -58,3 +51,7 @@ Excluir Usuario
 
     ${response}=  DELETE On Session  alias=Serverest   url=${ROTA_USUARIOS}/${id}    expected_status=${Status_Code}
 
+Cadastro de dois usuarios com mesmo email
+    ${id}    ${email}    ${senha}=   Cadastrar Usuario   email=Lucas@email.com    Status_Code=201
+    Cadastrar Usuario   email=${email}   Status_Code=400
+    Excluir Usuario    ${id}
