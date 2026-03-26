@@ -1,0 +1,14 @@
+{
+    "usuario_valido":{
+        "nome": "Nome",
+        "email": "Nome@email.com",
+        "password": "teste",
+        "administrador": "true"
+        },
+    "usuario_sem_senha":{
+        "nome": "UsuarioSemSenha",
+        "email": "semsenha@email.com",
+        "password": "",
+        "administrador": "true"
+        }
+}

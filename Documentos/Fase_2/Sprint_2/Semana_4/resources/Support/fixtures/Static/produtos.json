@@ -1,0 +1,8 @@
+{
+    "produtos_Validos":{
+        "nome": "Notebook Gamer Pro90010bv1",
+        "preco": 4500,
+        "descricao": "Notebook com RTX 4060 e 16GB RAM",
+        "quantidade": 10
+        }
+}
