@@ -12,4 +12,3 @@ Logar no sistema
     &{Body}    Create Dictionary  email=${email}    password=${password}   
     ${response}=  POST On Session  alias=Serverest  url=${ROTA_LOGIN}  json=&{Body}
     RETURN  ${response.json()}[authorization]
-    

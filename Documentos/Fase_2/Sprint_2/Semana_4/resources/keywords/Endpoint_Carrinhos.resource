@@ -11,13 +11,8 @@ ${ROTA_CANCELAR_COMPRA}           /carrinhos/cancelar-compra
 
 *** Keywords ***
 
-#-------------POST-------------#
-# Cadastrar carrinho dinamico valido
-#     ${body}    Criar dados para carrinhos validos
-#     Cadastrar carrinho    ${Cliente_authorization}    ${body}
-
 Cadastrar carrinho
-    [Arguments]    ${authorization}  ${id_Produto}
+    [Arguments]    ${authorization}  ${id_Produto}    ${statuscode}
     &{Header}  Create Dictionary  Authorization=${authorization}
     ${numero}    Evaluate    random.randint(2, 3)    random
     ${quantidade}    Generate Random String    length=${numero}    chars=[NUMBERS]
@@ -25,23 +20,31 @@ Cadastrar carrinho
     @{lista_produtos}    Create List    ${produto_item}
     &{Body}    Create Dictionary    produtos=${lista_produtos}
     ${response}=  POST On Session    alias=Serverest     url=${ROTA_CARRINHOS}    json=&{Body}  headers=${Header}
-    RETURN   ${response.json()}[_id]
+    IF    ${statuscode}==201
+        RETURN   ${response.json()}[_id]   ${response.json()}[message]
+    ELSE
+        RETURN   ${response.json()}[message]
+    END
+    
 
 
-# Cadastrar carrinho
-    # [Arguments]    ${authorization}  ${body}
-    # &{Header}  Create Dictionary  Authorization=${authorization}
-    # ${response}=  POST On Session    alias=Serverest     url=${ROTA_CARRINHOS}    json=&{Body}  headers=${Header}  expected_status=${Status_Code}
-    #     RETURN   ${response.json()}[_id]
-
-#-------------DELETE-------------#
-Concluir compra
+Concluir compra: sucesso
     [Arguments]    ${authorization}
     &{Header}  Create Dictionary  Authorization=${authorization}
     ${response}=  DELETE On Session    alias=Serverest     url=${ROTA_CONCLUIR_COMPRA}   headers=${Header}
+Concluir compra: usuario nao existe
 
 Cancelar compra
     [Arguments]    ${authorization}
     &{Header}  Create Dictionary  Authorization=${authorization}
     ${response}=  DELETE On Session    alias=Serverest     url=${ROTA_CANCELAR_COMPRA}   headers=${Header}
     
+Concelar compra: usuario nao existe
+
+Falhar em cadastrar carrinho: Não é permitido ter mais de 1 carrinho 400
+Falhar em cadastrar carrinho: Produto não encontrado 400
+Falhar em cadastrar carrinho: Produto não possui quantidade suficiente 400
+Falhar em cadastrar carrinho: Token de acesso ausente, inválido, expirado ou usuário do token não existe mais
+
+falhar em concluir compra: authorization invalida
+falhar em cancelar compra: authorization invalida

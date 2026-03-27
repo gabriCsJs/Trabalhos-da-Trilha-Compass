@@ -1,8 +1,30 @@
 {
-    "produtos_Validos":{
-        "nome": "Notebook Gamer Pro90010bv1",
-        "preco": 4500,
-        "descricao": "Notebook com RTX 4060 e 16GB RAM",
-        "quantidade": 10
-        }
+    "validos": {
+        "produto_Valido1":{
+            "nome": "Notebook Gamer Pro",
+            "preco": 4500,
+            "descricao": "Notebook com RTX 4060 e 16GB RAM",
+            "quantidade": 10
+            },
+        "produto_Valido2":{
+            "nome": "Mouser Gamer Pro",
+            "preco": 300,
+            "descricao": "Mouse",
+            "quantidade": 10
+            }
+    },
+    "invalidos": {
+        "produto_sem_nome":{
+            "nome": "",
+            "preco": 4500,
+            "descricao": "Notebook com RTX 4060 e 16GB RAM",
+            "quantidade": 10
+            },
+        "produto_sem dados":{
+            "nome": "",
+            "preco": "",
+            "descricao": "",
+            "quantidade": ""
+            }
+    }
 }

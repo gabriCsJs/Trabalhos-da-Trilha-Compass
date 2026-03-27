@@ -4,6 +4,7 @@ Library    String
 Resource    ../Variebles/serverest_variables.robot
 Resource    ../common/common.robot
 
+
 *** Keywords ***
 
 Criar dados para usuarios validos
@@ -23,18 +24,7 @@ Criar dados para produtos validos
     Log To Console    ${payload}
     RETURN    ${payload}
 
-# Criar dados para carrinhos validos
-#     ${resposta}=        Listar itens cadastrados no endpoint "/produtos"
-#     Log To Console    ${resposta}
-#     Log  ${resposta}
-#     ${lista_produtos}=    Get From Dictionary    ${resposta}    produtos
-#     ${indice_aleatorio}=    FakerLibrary.Random Int    min=0    max=${resposta}[quantidade] - 1
-#     ${produto_escolhido}=    Get From List    ${lista_produtos}    ${indice_aleatorio}
-#     ${quantidade}=    FakerLibrary.Random Int    min=1    max=${produto_escolhido}[quantidade]
-#     &{produto_item}=    Create Dictionary    idProduto=${produto_escolhido}[_id]    quantidade=${quantidade}
-#     @{produtos}=    Create List    ${produto_item}
-#     &{payload}=    Create Dictionary    produtos=${produtos}
-#     Log To Console    ${payload}
-#     RETURN    ${payload}
-
-
+Gerar id alfanumerico
+    [Arguments]    ${tamanho}=16
+    ${id_dinamico}=    Generate Random String    ${tamanho}    [LETTERS][NUMBERS]
+    RETURN    ${id_dinamico}

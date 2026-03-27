@@ -1,14 +1,30 @@
 {
-    "usuario_valido":{
-        "nome": "Nome",
-        "email": "Nome@email.com",
-        "password": "teste",
-        "administrador": "true"
+    "validos": {
+        "Cliente": {
+            "nome": "Nome Valido",
+            "email": "valido@email.com",
+            "password": "teste",
+            "administrador": "false"
         },
-    "usuario_sem_senha":{
-        "nome": "UsuarioSemSenha",
-        "email": "semsenha@email.com",
-        "password": "",
-        "administrador": "true"
+        "admin": {
+            "nome": "Admin Supremo",
+            "email": "admin@email.com",
+            "password": "senha_forte",
+            "administrador": "true"
         }
+    },
+    "invalidos": {
+        "sem_senha": {
+            "nome": "UsuarioSemSenha",
+            "email": "semsenha@email.com",
+            "password": "",
+            "administrador": "true"
+        },
+        "email_invalido": {
+            "nome": "Teste",
+            "email": "email_sem_arroba.com",
+            "password": "teste",
+            "administrador": "true"
+        }
+    }
 }

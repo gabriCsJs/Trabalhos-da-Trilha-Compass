@@ -12,7 +12,8 @@ Validar estrutura do JSON
         Dictionary Should Contain Key    ${resposta}    ${chave}
     END
 
-Validar status code "${statuscode}"
+Validar status code
+    [Arguments]    ${resposta}    ${statuscode}
     Should Be True    ${resposta.status_code} == ${statuscode}
 
 # Validar quantidade "${quantidade}"

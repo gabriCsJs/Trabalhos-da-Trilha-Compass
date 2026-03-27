@@ -46,16 +46,30 @@ Após a execuçao dos teste o robotframework gera uma pasta chamada results lá 
 Para visualizar reports voce deve acessar o jira
 https://espacoparachallangecerto.atlassian.net/jira/software/projects/RS/boards/135
 ## Como o codigo funciona
-Por boas praticas todas as variaveis que tiverem todas as letras em maisculo serao CONSTANTE
-### arquivo configuracao
-O arquivo configuracao é o responsavel por 
-- armazenar todas as variaveis que iremos usar com frequencia ao decorrer dos testes
-- Importar todas as keywords que serao usadas no projeto
-- Iniciar, encerrar sessao da api
-- Gerar e limpar massa de dados
+Como convenção, variáveis com todas as letras em maiúsculo são tratadas como **constantes**.
 
-### endpoints
-Todos os endpoints tem uma sessao settings e eles importam as seguintes bibliotecas
+### Estrutura de Pastas
+
+#### `resources/`
+A pasta `resources` centraliza todos os recursos necessários para o desenvolvimento dos testes. Ela é dividida em duas subpastas principais: `keywords` e `support`.
+
+*   **`keywords/`**: Contém um arquivo de resource (`.robot`) para cada endpoint da API (ex: `Endpoint_Usuarios.robot`). Cada arquivo agrupa as keywords específicas para interagir com aquele endpoint.
+
+*   **`support/`**: Fornece arquivos auxiliares que dão suporte aos testes. Está organizada nas seguintes subpastas:
+    *   **`bases/`**: Armazena configurações iniciais. Por exemplo, para evitar a importação repetida do arquivo `serverest_variables.robot` em todos os testes, nós o referenciamos aqui. Dessa forma, qualquer arquivo que importe o resource de `bases` terá acesso às bibliotecas e variáveis globais.
+    *   **`common/`**: Contém keywords e funcionalidades genéricas, que podem ser reutilizadas em testes de diferentes endpoints (ex: validação de schema de JSON).
+    *   **`fixtures/`**: Responsável por fornecer a massa de dados para os testes.
+        *   `dynamics.robot`: Gera dados dinâmicos e aleatórios para garantir a variabilidade dos testes.
+        *   `static/`: Armazena arquivos JSON com dados fixos, classificados como "válidos" e "inválidos". É útil para criar um repositório de dados conhecidos, permitindo, por exemplo, retestar cenários que falharam em versões anteriores e verificar se as correções foram eficazes.
+    *   **`variables/`**: Armazena o arquivo `serverest_variables.robot`, que define as variáveis globais do projeto. Variáveis como `${HOST}` são usadas em todos os endpoints e precisam estar sempre disponíveis. Este arquivo centraliza essas definições.
+
+#### `tests/`
+É onde armazenamos nossos testes automatizados, organizados por endpoints.
+
+### Funcionamento das Keywords
+Todos os arquivos de keywords de endpoint (`resources/keywords/`) importam as bibliotecas `RequestsLibrary` e `String` e definem as variáveis de rota correspondentes.
+
+Por exemplo, o arquivo `Endpoint_Carrinhos.robot` contém:
 ```
 RequestsLibrary
 String
