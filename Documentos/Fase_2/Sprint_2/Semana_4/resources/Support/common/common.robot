@@ -22,9 +22,9 @@ Listar itens cadastrados no endpoint "${endpoint}"
     ${response}=  Get On Session    alias=Serverest   url=${endpoint}
     RETURN    ${response.json()}
 
-Buscar item por ID no endpoint "${endpoint}"
-    [Arguments]      ${id}
-    ${response}=  Get On Session    alias=Serverest    url=${endpoint}/${id}
+Buscar item por ID no endpoint "${endpoint}"    
+    [Arguments]      ${id}    ${statuscode}
+    ${response}=  Get On Session    alias=Serverest    url=${endpoint}/${id}    expected_status=${statuscode}
     RETURN    ${response.json()}
 
 importar JSON estatico

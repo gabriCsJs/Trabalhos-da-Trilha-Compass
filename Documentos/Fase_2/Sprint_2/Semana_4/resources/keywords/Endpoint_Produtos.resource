@@ -21,19 +21,24 @@ Cadastrar produto estatico valido
     Set Global Variable    ${ID_Produto}   ${id}
 
 Cadastrar produto dinamico valido
-    [Arguments]    ${Authorization}
+    [Arguments]    ${Authorization}    ${Guardar_Var_na_Global}=${True}
     ${payload}    Criar dados para produtos validos
     Log   ${payload}
     ${id}    ${mensagem}=    POST produto   ${Authorization}    ${payload}    201
     Should Be Equal    ${mensagem}   Cadastro realizado com sucesso
-    Set Global Variable    ${ID_Produto}   ${id}
+    IF    ${Guardar_Var_na_Global}==${True}
+        Set Global Variable    ${ID_Produto}   ${id}
+    ELSE
+        RETURN    ${id}
+    END
+
 
 POST produto
     [Arguments]    ${Authorization}    ${body}    ${statuscode}
     &{Header}    Create Dictionary    Authorization=${Authorization}
     ${response}=    POST On Session    alias=Serverest    url=${ROTA_PRODUTOS}    json=&{body}    headers=${Header}    expected_status=${statuscode}
-    log    ${response}
-    RETURN       ${response}[_id]    ${response}[message]
+    ${body}=    Set Variable    ${response.json()}
+    RETURN    ${body}[_id]    ${body}[message]
 
 # PUT produto
 #     [Arguments]    ${id}    ${Authorization}    ${body}    ${statuscode}
@@ -52,7 +57,7 @@ PUT produto
     IF    ${statuscode}== 201
         RETURN    ${body}[_id]    ${body}[message]
     ELSE
-        RETURN    {body}[message]
+        RETURN    ${body}[message]
     END
 
     
@@ -118,7 +123,7 @@ DELETE - produto
     IF    ${statuscode}== 400
         RETURN    ${body}[_id]    ${body}[message]
     ELSE
-        RETURN    {body}[message]
+        RETURN    ${body}[message]
     END
 
 Excluir produto com sucesso: Produto existente

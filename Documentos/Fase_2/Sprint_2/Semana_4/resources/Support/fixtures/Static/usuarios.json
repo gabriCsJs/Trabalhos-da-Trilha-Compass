@@ -1,16 +1,28 @@
 {
     "validos": {
-        "Cliente": {
+        "cliente": {
             "nome": "Nome Valido",
             "email": "valido@email.com",
             "password": "teste",
             "administrador": "false"
         },
-        "admin": {
+        "administrador": {
             "nome": "Admin Supremo",
             "email": "admin@email.com",
             "password": "senha_forte",
             "administrador": "true"
+        },
+        "senha_numerica": {
+            "nome": "Usuario Senha Numerica",
+            "email": "numerica@email.com",
+            "password": "123456",
+            "administrador": "false"
+        },
+        "nome_composto": {
+            "nome": "Maria Clara da Silva",
+            "email": "mariaclara@email.com",
+            "password": "senha123",
+            "administrador": "false"
         }
     },
     "invalidos": {
@@ -25,6 +37,40 @@
             "email": "email_sem_arroba.com",
             "password": "teste",
             "administrador": "true"
+        },
+        "sem_nome": {
+            "nome": "",
+            "email": "semnome@email.com",
+            "password": "teste",
+            "administrador": "false"
+        },
+        "sem_email": {
+            "nome": "Usuario Sem Email",
+            "email": "",
+            "password": "teste",
+            "administrador": "false"
+        },
+        "administrador_invalido": {
+            "nome": "Usuario Adm Invalido",
+            "email": "adm_invalido@email.com",
+            "password": "teste",
+            "administrador": "sim"
+        },
+        "sem_campos": {
+            "nome": "",
+            "email": "",
+            "password": "",
+            "administrador": ""
+        },
+        "sem_campo_nome": {
+            "email": "semcamponome@email.com",
+            "password": "teste",
+            "administrador": "false"
+        },
+        "sem_campo_email": {
+            "nome": "Usuario Sem Campo Email",
+            "password": "teste",
+            "administrador": "false"
         }
     }
 }

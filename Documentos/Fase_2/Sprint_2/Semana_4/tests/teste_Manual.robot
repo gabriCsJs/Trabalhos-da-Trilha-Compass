@@ -2,7 +2,7 @@
 Resource  ../resources/keywords/Endpoint_Usuario.resource
 Resource  ../resources/keywords/Endpoint_Produtos.resource
 Resource  ../resources/keywords/Endpoint_Carrinhos.resource
-Resource  ../resources/keywords/Endpoint_Login.resource
+
 
 Suite Setup     Iniciar Sessao API
 Suite Teardown   Encerrar Sessao API
@@ -10,19 +10,13 @@ Suite Teardown   Encerrar Sessao API
 *** Test Cases ***
 
 
-Teste manual cadastrar usuario
-    ${ID_Cliente}    ${Email_Cliente}    ${Password_Cliente}=    Cadastrar usario dinamico valido
-    Editar usuario Dinamicamente    ${ID_Cliente}
-    Excluir Usuario    ${ID_Cliente}
-    Listar itens cadastrados no endpoint "${ROTA_USUARIOS}"
-Teste manual cadastrar usuario estatico
-    Cadastrar Usuario estatico valido
-    Listar itens cadastrados no endpoint "${ROTA_USUARIOS}"
-Teste completo
-    Cadastrar Cliente e administrador
-    Cadastrar produto dinamico valido    ${Adm_authorization}
-    Cadastrar carrinho    ${Cliente_authorization}    ${ID_Produto}
-    Concluir compra    ${Cliente_authorization}
-    Excluir produto    ${ID_Produto}    ${Adm_authorization}
-    Excluir Usuario    ${ID_Adm}
-    Excluir Usuario    ${ID_Cliente}
+Teste Completo
+    [Documentation]    Happy Path: Cadastro → Login → Produto → Carrinho → Concluir Compra
+    [Tags]    Positivo    e2e
+    ${id}    ${email}    ${senha}=    Cadastrar Usario dinamico valido
+    ${authorization}=    Logar no sistema Com sucesso    ${email}    ${senha}
+    Cadastrar produto dinamico valido    ${authorization}
+    Cadastrar carrinho com sucesso    ${authorization}    ${ID_Produto}
+    Concluir compra com carrinho associado ao usuario com sucesso    ${authorization}
+    Excluir produto com sucesso: Produto existente    ${ID_Produto}    ${authorization}
+    Excluir Usuario sem carrinho com suscesso    ${id}
