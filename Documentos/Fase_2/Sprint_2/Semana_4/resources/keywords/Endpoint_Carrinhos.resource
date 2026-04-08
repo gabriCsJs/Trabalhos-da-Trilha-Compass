@@ -13,7 +13,6 @@ ${ROTA_CANCELAR_COMPRA}           /carrinhos/cancelar-compra
 
 #-------------Só pensei nessas keywords, agora devemos validar se elas estao funcionando-------------#
 
-
 Post carrinho
     [Arguments]    ${authorization}  ${id_Produto}    ${statuscode}  ${quantidade}  ${retornar}=${True}  
     &{Header}  Create Dictionary  Authorization=${authorization}

@@ -3,33 +3,30 @@ Resource  ../resources/keywords/Endpoint_Usuario.resource
 Resource  ../resources/keywords/Endpoint_Produtos.resource
 Resource  ../resources/keywords/Endpoint_Carrinhos.resource
 
-Suite Setup     Iniciar Sessao API
-Suite Teardown   Encerrar Sessao API
+Test Setup    Run Keywords    Iniciar Sessao API    AND    Cadastrar Cliente e administrador  AND  Cadastrar produto dinamico valido
+Test Teardown   Run Keywords   Encerrar Sessao API    AND   Excluir produto com sucesso: Produto existente   AND    Deletar Cliente e administrador
 
 *** Test Cases ***
 
-Pos-Carr-01
-    [Tags]    e2e    Positivo
-    ${id}    ${email}    ${senha}=    Cadastrar Usario dinamico valido
-    ${authorization}=    Logar no sistema Com sucesso    ${email}    ${senha}
-    Cadastrar produto dinamico valido    ${authorization}
-    #descobrir um jeito de ver quanto de produto foi criado
-    Cadastrar carrinho com sucesso    ${authorization}    ${id_produto}
-    Concluir compra com carrinho associado ao usuario com sucesso    ${authorization}
-    #descobrir um jeito de ver quanto sobrou de produtos
-    Buscar item por ID no endpoint "${ROTA_CARRINHOS}"    ${ID_Carrinho}    400
-    Excluir produto com sucesso: Produto existente    ${ID_Produto}    ${authorization}
-    Excluir Usuario sem carrinho com suscesso    ${id}
-Reg-Carr-01
+#---------------POSITIVOS----------------#
+CT-Pos-10-Carrinho-Post
+    [Documentation]    Crie um carrinho vinculado a um usuário válido contendo um produto
+    [Tags]    Positivo
+    Cadastrar carrinho com sucesso    ${Cliente_authorization}    ${ID_Produto}
+
+CT-Pos-11-Carrinho-delete
+    [Documentation]    Com um carrinho válido devidamente vinculado a um usuário tente concluir uma compra
+    [Tags]    Positivo
+    Cadastrar carrinho com sucesso    ${Cliente_authorization}    ${ID_Produto}
+    Concluir compra com carrinho associado ao usuario com sucesso    ${Cliente_authorization}
+
+CT-Pos-12-Carrinho-delete
     [Documentation]
-    [Tags]    regra de negocio
-    ${id}    ${email}    ${senha}=    Cadastrar Usario dinamico valido
-    ${authorization}=    Logar no sistema Com sucesso    ${email}    ${senha}
-    Cadastrar produto dinamico valido    ${authorization}
-    #descobrir um jeito de ver quanto de produto foi criado
-    Cadastrar carrinho com sucesso    ${authorization}    ${id_produto}
-    Cancelar compra com carrinho associado ao usuario com sucesso    ${authorization}
-    #descobrir um jeito de ver quanto sobrou de produtos
-    Buscar item por ID no endpoint "${ROTA_CARRINHOS}"    ${ID_Carrinho}    400
-    Excluir produto com sucesso: Produto existente    ${ID_Produto}    ${authorization}
-    Excluir Usuario sem carrinho com suscesso    ${id}
+    [Tags]    Positivo
+    Cadastrar carrinho com sucesso    ${Cliente_authorization}    ${ID_Produto}
+    Cancelar compra com carrinho associado ao usuario com sucesso    ${Cliente_authorization}
+
+
+#---------------NEGATIVOS----------------#
+#---------------CONTRATO-----------------#
+#---------------NEGOCIO------------------#

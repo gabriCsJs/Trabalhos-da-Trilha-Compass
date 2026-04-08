@@ -21,10 +21,13 @@ Cadastrar Usuario estatico valido
     RETURN    ${id}    ${email}    ${senha}
 
 Cadastrar Usario dinamico valido
+    [Arguments]    ${retorno?}=${True}
     ${payload}    Criar dados para usuarios validos 
     ${id}    ${email}    ${senha}  ${mensagem}=    Post Usuario    ${payload}    201
     Should Be Equal    ${mensagem}   Cadastro realizado com sucesso
-    RETURN    ${id}    ${email}    ${senha}
+    IF    ${retorno?}==${True}
+        RETURN    ${id}    ${email}    ${senha}
+    END
 
 Falhar em cadastrar usario com email ja cadastrado
     ${id}    ${Email}    ${Password}=    Cadastrar Usuario estatico valido    cenario=Cliente
@@ -76,11 +79,11 @@ Criar usario Dinamicamente pelo PUT com sucesso
     ${id}   ${mensagem}=  Put Usuario   ${id}   ${payload}    201
     Should Be Equal    ${mensagem}   Cadastro realizado com sucesso
 
-Excluir Usuario sem carrinho com suscesso
+Excluir Usuario com sucesso
     [Arguments]    ${id}
     ${mensagem}=  Delete Usuario    ${id}    200
     Should Be Equal    ${mensagem}   Registro excluído com sucesso
-    # Log    ${response.json()}
+
 
 Excluir usuario que nao existe
     ${id}=    Gerar id alfanumerico
@@ -108,8 +111,8 @@ Cadastrar Cliente e administrador
     Set Global Variable    ${Password_Cliente}          ${local_Password_Cliente}
     Set Global Variable    ${Cliente_authorization}     ${local_Cliente_auth}
 Deletar Cliente e administrador
-    Excluir Usuario sem carrinho com suscesso    ${ID_Adm}
-    Excluir Usuario sem carrinho com suscesso    ${ID_Cliente}
+    Excluir Usuario com sucesso   ${ID_Adm}
+    Excluir Usuario com sucesso    ${ID_Cliente}
     
 
 
@@ -150,3 +153,16 @@ Falhar em logar: email e senha errados
     &{Body}    Create Dictionary  email=${email}    password=${senha}
     ${mensagem}=  Post Login    ${Body}    401
     Should Be Equal    ${mensagem}   Email e/ou senha inválidos
+
+
+
+
+
+
+
+Excluir um usuario sem carrinho com sucesso
+    ${id}  ${email}  ${senha}=    Cadastrar Usario dinamico valido
+    Excluir Usuario com sucesso   ${id}
+Criar e Editar um usuario com sucesso
+    ${id}  ${email}  ${senha}=    Cadastrar Usario dinamico valido
+    Editar usuario Dinamicamente Com sucesso    ${id}

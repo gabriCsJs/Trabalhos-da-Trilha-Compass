@@ -21,7 +21,7 @@ Cadastrar produto estatico valido
     Set Global Variable    ${ID_Produto}   ${id}
 
 Cadastrar produto dinamico valido
-    [Arguments]    ${Authorization}    ${Guardar_Var_na_Global}=${True}
+    [Arguments]    ${Authorization}=${Adm_authorization}    ${Guardar_Var_na_Global}=${True}
     ${payload}    Criar dados para produtos validos
     Log   ${payload}
     ${id}    ${mensagem}=    POST produto   ${Authorization}    ${payload}    201
@@ -89,7 +89,8 @@ Sucesso em editar produto dinamicamente
 
 
 Criar produto Dinamicamente pelo PUT Com sucesso
-    [Arguments]    ${id}    ${Authorization}    ${guardar_id}=${False} 
+    [Arguments]    ${Authorization}=${Adm_authorization}    ${guardar_id}=${False} 
+    ${id}=     Gerar id alfanumerico
     ${payload}=    Criar dados para produtos validos
     ${id}  ${mensagem}=  PUT produto    ${id_produto}    ${Authorization}    ${payload}    201
     IF    ${guardar_id}==${True}
@@ -127,12 +128,13 @@ DELETE - produto
     END
 
 Excluir produto com sucesso: Produto existente
-    [Arguments]    ${id_do_produto}    ${Authorization}
+    [Arguments]    ${id_do_produto}=${ID_Produto}    ${Authorization}=${Adm_authorization}
     ${mensagem}=  DELETE - produto    ${id_do_produto}    ${Authorization}    200
     Should Be Equal    ${mensagem}   Registro excluído com sucesso
 
 Excluir produto: Produto inexistente
-    [Arguments]    ${id_do_produto}    ${Authorization}
+    [Arguments]    ${Authorization}=${Adm_authorization}
+    ${id_do_produto}=    Gerar id alfanumerico
     ${mensagem}=  DELETE - produto    ${id_do_produto}    ${Authorization}    200
     Should Be Equal    ${mensagem}   Nenhum registro excluído
 
@@ -159,3 +161,9 @@ Falhar em excluir produto: authorization sem privilegios administrativos
     [Arguments]    ${id_do_produto}    ${Authorization_de_um_cliente}
     ${mensagem}=  DELETE - produto    ${id_do_produto}    ${Authorization_de_um_cliente}    403
     Should Be Equal    ${mensagem}   Rota exclusiva para administradores
+
+
+Criar e editar produto
+    [Arguments]    ${Authorization}=${Adm_authorization}
+    Cadastrar produto dinamico valido
+    Sucesso em editar produto dinamicamente    ${ID_Produto}    ${Authorization}

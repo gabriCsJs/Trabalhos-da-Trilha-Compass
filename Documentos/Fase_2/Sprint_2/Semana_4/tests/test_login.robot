@@ -7,6 +7,13 @@ Suite Teardown   Run Keywords   Encerrar Sessao API  AND    Deletar Cliente e ad
 
 *** Test Cases ***
 
-Pos-Login-01 - Validar autenticação do usuário valido
+#---------------POSITIVOS----------------#
+CT-Pos-01-Login-Post
+    [Documentation]     Validar autenticação com credenciais válidas e geração de token de acesso conforme contrato.
+    [Tags]    Positivo
     Logar no sistema Com sucesso    ${Email_Cliente}    ${Password_Cliente}
-    
+
+
+#---------------NEGATIVOS----------------#
+#---------------CONTRATO-----------------#
+#---------------NEGOCIO------------------#
