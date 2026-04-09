@@ -101,7 +101,7 @@ Falhar em editar produto: authorization expirada
 Sucesso em editar produto dinamicamente
     [Arguments]    ${id_produto}    ${Authorization}
     ${payload}=    Criar dados para produtos validos
-    ${mensagem}=  PUT produto    ${id_produto}    ${Authorization}    ${payload}    200
+    ${mensagem}=  PUT produto    ${id_produto}    ${Authorization}    ${payload}    201
     Should Be Equal    ${mensagem}   Registro alterado com sucesso
 
 
@@ -136,7 +136,7 @@ Falhar em editar produto: authorization sem privilegios administrativos
 DELETE - produto
     [Arguments]    ${id_do_produto}    ${Authorization}   ${statuscode}  
     &{Header}    Create Dictionary    Authorization=${Authorization}
-    ${response}=    DELETE On Session    alias=Serverest    url=${ROTA_PRODUTOS}/${id_do_produto}    headers=${Header}
+    ${response}=    DELETE On Session    alias=Serverest    url=${ROTA_PRODUTOS}/${id_do_produto}    headers=${Header}     expected_status=${statuscode}
     ${body}=    Set Variable    ${response.json()}
     RETURN    ${body}[message]
 
