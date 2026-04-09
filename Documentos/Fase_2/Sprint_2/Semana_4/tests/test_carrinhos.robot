@@ -21,7 +21,7 @@ CT-Pos-11-Carrinho-delete
     Concluir compra com carrinho associado ao usuario com sucesso    ${Cliente_authorization}
 
 CT-Pos-12-Carrinho-delete
-    [Documentation]
+    [Documentation]    Com um carrinho válido devidamente vinculado a um usuário tente cancelar uma compra
     [Tags]    Positivo
     Cadastrar carrinho com sucesso    ${Cliente_authorization}    ${ID_Produto}
     Cancelar compra com carrinho associado ao usuario com sucesso    ${Cliente_authorization}

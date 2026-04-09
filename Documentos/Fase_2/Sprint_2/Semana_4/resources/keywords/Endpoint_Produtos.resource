@@ -10,19 +10,24 @@ ${ROTA_PRODUTOS}     /produtos
 
 *** Keywords ***
 
-#-------------Validado-------------#
+#-------------PRESCISA SER REVISADO PARA GARANTIR QUE NAO EXISTEM MAIS BUGS-------------#
 
 Cadastrar produto estatico valido
-    [Arguments]    ${cenario}    ${Authorization}  
+    [Arguments]    ${cenario}    ${Authorization}  ${Guardar_Var_na_Global}=${True}
     ${json}    importar JSON estatico    resources/Support/fixtures/Static/produtos.json
     ${body}    Set Variable    ${json["validos"]["${cenario}"]}
     ${id}    ${mensagem}=    Post produto   ${Authorization}    ${body}    201
     Should Be Equal    ${mensagem}   Cadastro realizado com sucesso
     Set Global Variable    ${ID_Produto}   ${id}
+    IF    ${Guardar_Var_na_Global}==${True}
+        Set Global Variable    ${ID_Produto}   ${id}
+    ELSE
+        RETURN    ${id}
+    END
 
 Cadastrar produto dinamico valido
     [Arguments]    ${Authorization}=${Adm_authorization}    ${Guardar_Var_na_Global}=${True}
-    ${payload}    Criar dados para produtos validos
+    ${payload}=    Criar dados para produtos validos
     Log   ${payload}
     ${id}    ${mensagem}=    POST produto   ${Authorization}    ${payload}    201
     Should Be Equal    ${mensagem}   Cadastro realizado com sucesso
@@ -32,13 +37,18 @@ Cadastrar produto dinamico valido
         RETURN    ${id}
     END
 
-
 POST produto
     [Arguments]    ${Authorization}    ${body}    ${statuscode}
     &{Header}    Create Dictionary    Authorization=${Authorization}
     ${response}=    POST On Session    alias=Serverest    url=${ROTA_PRODUTOS}    json=&{body}    headers=${Header}    expected_status=${statuscode}
     ${body}=    Set Variable    ${response.json()}
-    RETURN    ${body}[_id]    ${body}[message]
+    IF    ${statuscode}==201
+        RETURN    ${response.json()}[_id]    ${response.json()}[message]
+    ELSE
+        RETURN    ${response.json()}[message]
+    END
+    
+
 
 # PUT produto
 #     [Arguments]    ${id}    ${Authorization}    ${body}    ${statuscode}
@@ -74,12 +84,19 @@ PUT produto
 #     END
 
 #esse carinha tem que virar generico
-Funcao para editar produto dinamicamente
-    [Arguments]    ${id_produto}    ${Authorization}    ${statuscode}
+editar produto dinamicamente
+    [Arguments]    ${id_produto}    ${Authorization} 
     ${payload}    Criar dados para produtos validos
-    ${id}  ${mensagem}=  PUT produto    ${id_produto}    ${Authorization}    ${payload}    ${statuscode}
+    ${id}  ${mensagem}=  PUT produto    ${id_produto}    ${Authorization}    ${payload}    200 
     RETURN    ${id}    ${mensagem}
     # Should Be Equal    ${mensagem}   Registro alterado com sucesso
+Falhar em editar produto: authorization expirada
+    [Arguments]    ${authorization}=${Adm_authorization}
+    Cadastrar produto dinamico valido    
+    Esperar Token invalidar
+    ${payload}    Criar dados para produtos validos
+    ${mensagem}=  PUT produto    ${ID_Produto}    ${Authorization}    ${payload}    200 
+    Should Be Equal    ${mensagem}    Token de acesso ausente, inválido, expirado ou usuário do token não existe mais
 
 Sucesso em editar produto dinamicamente
     [Arguments]    ${id_produto}    ${Authorization}
@@ -121,40 +138,29 @@ DELETE - produto
     &{Header}    Create Dictionary    Authorization=${Authorization}
     ${response}=    DELETE On Session    alias=Serverest    url=${ROTA_PRODUTOS}/${id_do_produto}    headers=${Header}
     ${body}=    Set Variable    ${response.json()}
-    IF    ${statuscode}== 400
-        RETURN    ${body}[_id]    ${body}[message]
-    ELSE
-        RETURN    ${body}[message]
-    END
+    RETURN    ${body}[message]
 
 Excluir produto com sucesso: Produto existente
     [Arguments]    ${id_do_produto}=${ID_Produto}    ${Authorization}=${Adm_authorization}
     ${mensagem}=  DELETE - produto    ${id_do_produto}    ${Authorization}    200
     Should Be Equal    ${mensagem}   Registro excluído com sucesso
 
-Excluir produto: Produto inexistente
+Falhar em Excluir produto: Produto inexistente
     [Arguments]    ${Authorization}=${Adm_authorization}
     ${id_do_produto}=    Gerar id alfanumerico
     ${mensagem}=  DELETE - produto    ${id_do_produto}    ${Authorization}    200
     Should Be Equal    ${mensagem}   Nenhum registro excluído
 
 Falhar em excluir produto: Produto faz parte de um carrinho
-    [Documentation]     cara isso vai dar erro porque a resposta da api é 
-    ...     {
-    ...         "message": "Não é permitido excluir produto que faz parte de carrinho",
-    ...       "idCarrinho": [
-    ...       "qbMqntef4iTOwWfg, yILJY1eaAUC6hyRc"
-    ...       ]}
-    ...    entao presciso descobrir como tratar isso...vou ter que tratar isso na condicional do delete só ajustar 
-    ...    mas no momento vou me concentrar em terminar de escrever os outros tipos de caso
-    [Arguments]    ${id_do_produto}    ${Authorization}
+    [Documentation]
+    [Arguments]    ${Authorization}    ${id_do_produto}
     ${mensagem}=  DELETE - produto    ${id_do_produto}    ${Authorization}    400
     Should Be Equal    ${mensagem}   Não é permitido excluir produto que faz parte de carrinho
 
 Falhar em excluir produto: authorization invalida
-    [Arguments]    ${id_do_produto}
+    Cadastrar produto dinamico valido
     ${id_de_usuario_falso}=    Gerar id alfanumerico
-    ${mensagem}=  DELETE - produto    ${id_do_produto}    ${id_de_usuario_falso}    401
+    ${mensagem}=  DELETE - produto    ${ID_Produto}    ${id_de_usuario_falso}    401
     Should Be Equal    ${mensagem}   Token de acesso ausente, inválido, expirado ou usuário do token não existe mais
 
 Falhar em excluir produto: authorization sem privilegios administrativos
@@ -167,3 +173,22 @@ Criar e editar produto
     [Arguments]    ${Authorization}=${Adm_authorization}
     Cadastrar produto dinamico valido
     Sucesso em editar produto dinamicamente    ${ID_Produto}    ${Authorization}
+
+Falhar em Criar produto: authorization gerada artificialmente
+    ${id_de_usuario_falso}=    Gerar id alfanumerico
+    ${payload}=    Criar dados para produtos validos
+    ${mensagem}=    POST produto   ${id_de_usuario_falso}    ${payload}    401
+    Should Be Equal    ${mensagem}   Token de acesso ausente, inválido, expirado ou usuário do token não existe mais
+    
+Falhar em criar produto pelo PUT: nome de produto ja registrado
+    [Arguments]    ${Authorization}=${Adm_authorization}
+    ${payload}=    Criar dados para produtos validos
+    Log To Console    ${payload}
+    ${id}    ${mensagem}=    POST produto    ${Authorization}    ${payload}    201
+    ${id_falso}=    Gerar id alfanumerico
+    Log To Console    ${payload}
+    Listar itens cadastrados no endpoint "${ROTA_PRODUTOS}"
+    ${mensagem}=    PUT produto    ${id_falso}    ${Authorization}    ${payload}    400
+    Log To Console    ${payload}
+    Listar itens cadastrados no endpoint "${ROTA_PRODUTOS}"
+    Should Be Equal    ${mensagem}    Já existe produto com esse nome

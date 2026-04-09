@@ -71,6 +71,13 @@
             "nome": "Usuario Sem Campo Email",
             "password": "teste",
             "administrador": "false"
+        },
+        "campo_extra": {
+            "nome": "Maria Clara da Silva",
+            "email": "mariaclara@email.com",
+            "password": "senha123",
+            "administrador": "false",
+            "campo_extra": "teste"
         }
     }
 }

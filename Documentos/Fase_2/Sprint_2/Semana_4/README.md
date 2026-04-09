@@ -1,7 +1,7 @@
 ## objetivo do projeto
 Api Alvo:https://compassuol.serverest.dev/
 
-O objetivo deste plano é criar testes automatizados para todos os endpoints (Usuários, Produtos, Carrinhos e Login) oferecendo uma cobertura de testes negativos, positivos, e validação de contrato e trazer os testes feitos no postman para este projeto
+O objetivo deste é criar testes automatizados para todos os endpoints (Usuários, Produtos, Carrinhos e Login) oferecendo uma cobertura de testes negativos, positivos, e validação de contrato e trazer os testes feitos no postman para este projeto
 
 
 ## como instalar dependências
@@ -20,25 +20,17 @@ robot -t "Nome do Teste" testes_serverest.robot
 ```
 Para executar apenas testes com um tag especifica
 ```
-robot -i login arquivo.robot
+robot -i Positivos arquivo.robot
 ```
 
-é importante verificar se a sessao settings está criada corretamente pois é nescessario uma massa de dados para a execução dos testes
+Os testes estao organizados por endpoint na qual cada case test tem um ID
+voce pode verificar a documentaçao correspondente a cada ID
 
+Todos os test cases novos tem que ter um ID por isso seguimos a seguinte estrutura para montar um ID
 ```
-*** Settings ***
-Resource  ../resources/Base/setup_teardown.resource
-Suite Setup       Run Keywords    Iniciar Sessao API    AND    Criar Massa de Dados da Suite
-Suite Teardown    Run Keywords    Limpar Massa de dados    AND    Encerrar Sessao API
-Library    Collections
+CT-Tipo de teste-Numero-Endpoint-Metodo
 ```
-
-Caso deseje criar sua propria massa de dados é recomendavel criar o seguintes itens na massa de dados
-- Crie um Administrador e salve sua Authorization
-- Crie um Cliente(usuario sem previlegios administrativos) e salve sua Authorization
-
-
-voce pode executar qualquer cenario isoladamente se desejar pois a automatizaçao ja esta preparada para isso
+Todos os Cts devem ter exatamente a descriçao igual ao que foi escrito no plano de testes
 
 ## como visualizar evidências (reports/logs)
 Após a execuçao dos teste o robotframework gera uma pasta chamada results lá voce pode encontrar o log da execução
@@ -90,6 +82,3 @@ quando mandamos o seguinte comando ou um similar o ```alias=Serverest``` se junt
 ${response}=  POST On Session    alias=Serverest     url=${ROTA_CARRINHOS}    json=&{Body}  headers=${Header}  expected_status=${Status_Code}
 ```
 Ultilizamos essa técnica para todos as keywords.
-
-todas as keywords tem um argurmento que é o ${Status_Code} e por padrao elas esperam que o teste retorne Status_Code sucesso
-Se a keyword retorna uma resposta da api essa keyword nao ira retornar um json se o Status Code recebido for de falha isso foi feito para evitar erros na automaçao

@@ -1,8 +1,11 @@
 *** Settings ***
 Resource  ../resources/keywords/Endpoint_Usuario.resource
+Resource  ../resources/keywords/Endpoint_Produtos.resource
+Resource  ../resources/keywords/Endpoint_Carrinhos.resource
 
-Suite Setup     Iniciar Sessao API
-Suite Teardown   Encerrar Sessao API
+Test Setup   Run Keywords    Iniciar Sessao API    AND    Cadastrar Cliente e administrador
+test Teardown   Run Keywords  Deletar Cliente e administrador    AND      Encerrar Sessao API    
+
 
 *** Test Cases ***
 
@@ -22,8 +25,34 @@ CT-Pos-04-User-Put
 CT-Pos-14-User-Post
     [Documentation]    Criar usuario com sucesso
     [Tags]    Positivo
-    ${id}  ${email}  ${senha}=  Cadastrar Usario dinamico valido
+    ${id}  ${email}  ${senha}=  Cadastrar Usuario dinamico valido
     Excluir Usuario com sucesso    ${id}
 #---------------NEGATIVOS----------------#
+CT-Neg-04-User-delete
+    [Documentation]    validar se a api impede a exclusão de um usuário com carrinho
+    [Tags]    Negativo
+    Cadastrar produto dinamico valido
+    Cadastrar carrinho com sucesso    ${Cliente_authorization}    ${ID_Produto}
+    Falhar em excluir usuario com carrinho cadastrado    ${ID_Cliente}
+    Cancelar compra com carrinho associado ao usuario com sucesso    ${Cliente_authorization}
+    Excluir produto com sucesso: Produto existente
+
+CT-Neg-05-User-delete
+    [Documentation]    Validar regra de unicidade de e-mail ao tentar cadastrar usuário com e-mail já existente
+    [Tags]    Negativo
+    Falhar em cadastrar usario com email ja cadastrado Pelo POST
+Ct-Neg-06-User-Put
+    [Documentation]    Tentar cadastrar um usuário pelo put com um email ja cadastrado para validar se a api garante a unicidade de emails
+    [Tags]    Negativo
+    falhar em cadastrar um usuario pelo put com um email ja cadastrado
+
 #---------------CONTRATO-----------------#
+Ct-Contrato-01-User-Post
+    [Documentation]    Enviar cadastro de usuário com os campos documentados e um atributo extra não previsto no contrato:
+    [Tags]    Contrato
+    Falhar em cadastrar usuario: campo extra
+Ct-Contrato-02-User-Post
+    [Documentation]    Enviar cadastro de usuário sem um campo obrigatório
+    [Tags]    Contrato
+    Falhar em cadastrar usuario: campo faltando
 #---------------NEGOCIO------------------#
