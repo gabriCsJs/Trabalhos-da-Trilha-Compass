@@ -19,7 +19,7 @@ CT-Pos-03-User-Delete
     [Tags]    Positivo
     Excluir usuario que nao existe
 CT-Pos-04-User-Put
-    [Documentation]    Gerar ID e enviar uma requisiçao para a api deletar o usuario
+    [Documentation]    Enviar para a api um ID válido para verificar se ela modifica os dados do usuário
     [Tags]    Positivo
     Criar e Editar um usuario com sucesso
 CT-Pos-14-User-Post
@@ -40,7 +40,7 @@ CT-Neg-04-User-delete
 CT-Neg-05-User-delete
     [Documentation]    Validar regra de unicidade de e-mail ao tentar cadastrar usuário com e-mail já existente
     [Tags]    Negativo
-    Falhar em cadastrar usario com email ja cadastrado Pelo POST
+    Falhar em cadastrar usuario com email ja cadastrado Pelo POST
 Ct-Neg-06-User-Put
     [Documentation]    Tentar cadastrar um usuário pelo put com um email ja cadastrado para validar se a api garante a unicidade de emails
     [Tags]    Negativo

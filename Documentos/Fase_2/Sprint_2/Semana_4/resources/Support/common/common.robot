@@ -16,17 +16,6 @@ Validar status code
     [Arguments]    ${resposta}    ${statuscode}
     Should Be True    ${resposta.status_code} == ${statuscode}
 
-# Validar quantidade "${quantidade}"
-    
-Listar itens cadastrados no endpoint "${endpoint}"
-    ${response}=  Get On Session    alias=Serverest   url=${endpoint}
-    RETURN    ${response.json()}
-
-Buscar item por ID no endpoint "${endpoint}"    
-    [Arguments]      ${id}    ${statuscode}
-    ${response}=  Get On Session    alias=Serverest    url=${endpoint}/${id}    expected_status=${statuscode}
-    RETURN    ${response.json()}
-
 importar JSON estatico
     [Arguments]    ${nome_arquivo}
     ${arquivo}    Get File  ${EXECDIR}/${nome_arquivo}
@@ -51,9 +40,7 @@ Validar campos do payload de usuario
             RETURN    campo_extra:${campo}
         END
     END
-
     RETURN    ${None}
 
-
 Esperar Token invalidar
-    Sleep    600
+    Sleep    602

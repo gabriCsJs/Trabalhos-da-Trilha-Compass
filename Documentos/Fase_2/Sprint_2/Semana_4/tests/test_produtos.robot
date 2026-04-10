@@ -30,7 +30,6 @@ CT-Pos-09-Produto-Put
     [Documentation]    tentar criar um produto que não existe pelo put
     [Tags]    Positivo
     Criar produto Dinamicamente pelo PUT Com sucesso
-
 #---------------NEGATIVOS----------------#
 Ct-Neg-07-Produto-Post
     [Documentation]    Tentar criar um produto com um token de autorização gerado artificialmente
@@ -56,6 +55,5 @@ Ct-Neg-11-Produto-PUT
     [Documentation]    logue com um usuário com privilégios administrativos e espero o tempo de expiração do token e tente editar um produto
     [Tags]    Negativo
     Falhar em editar produto: authorization expirada
-
 #---------------CONTRATO-----------------#
 #---------------NEGOCIO------------------#

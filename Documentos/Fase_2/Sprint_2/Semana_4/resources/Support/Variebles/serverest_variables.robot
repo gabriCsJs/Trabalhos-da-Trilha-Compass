@@ -1,18 +1,23 @@
 
 *** Variables ***
 ${HOST}    https://compassuol.serverest.dev
-${resposta}
-${ID_Cliente}
+${resposta}                  ${EMPTY}
+${ID_Cliente}                ${EMPTY}
 # ${Name_Cliente}
-${Password_Cliente}     
+${Password_Cliente}          ${EMPTY} 
 ${Email_Cliente}
-${Cliente_authorization}
+${Cliente_authorization}     ${EMPTY}
 
-${ID_Adm}
+${ID_Adm}                    ${EMPTY}
 # ${Name_Adm}
-${Password_Adm}     
-${Email_Adm}     
-${Adm_authorization}
+${Password_Adm}              ${EMPTY}   
+${Email_Adm}                 ${EMPTY}
+${Adm_authorization}         ${EMPTY}
 
-${ID_Produto}
-${ID_Carrinho}
+${ID_Produto}                ${EMPTY}
+${ID_Carrinho}               ${EMPTY}
+
+
+${ROTA_USUARIOS}     /usuarios
+${ROTA_LOGIN}        /login
+${ROTA_PRODUTOS}     /produtos

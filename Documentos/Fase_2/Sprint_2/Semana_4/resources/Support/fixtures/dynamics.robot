@@ -12,7 +12,7 @@ Criar dados para usuarios validos
     ${senha}=    Gerar Senha aleatoria
     &{playload}    Create Dictionary    nome=${nome}    email=${email}    password=${senha}    administrador=true
     Log     eu estou no dynamics: ${playload}
-    RETURN    &{playload}
+    RETURN    ${playload}
 
 Criar dados para produtos validos
     ${string_aleatoria}    Generate Random String    6    [LETTERS][NUMBERS]

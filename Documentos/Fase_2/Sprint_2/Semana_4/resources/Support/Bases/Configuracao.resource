@@ -6,6 +6,7 @@ Library    OperatingSystem
 Resource    ../Variebles/serverest_variables.robot
 Resource    ../common/common.robot
 Resource    ../fixtures/dynamics.robot
+Resource    ../common/Metodos_de_chamada.robot
 
 
 *** Keywords ***
