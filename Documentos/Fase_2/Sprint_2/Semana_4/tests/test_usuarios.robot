@@ -45,7 +45,7 @@ Ct-Neg-06-User-Put
     [Documentation]    Tentar cadastrar um usuário pelo put com um email ja cadastrado para validar se a api garante a unicidade de emails
     [Tags]    Negativo
     falhar em cadastrar um usuario pelo put com um email ja cadastrado
-
+    
 #---------------CONTRATO-----------------#
 Ct-Contrato-01-User-Post
     [Documentation]    Enviar cadastro de usuário com os campos documentados e um atributo extra não previsto no contrato:

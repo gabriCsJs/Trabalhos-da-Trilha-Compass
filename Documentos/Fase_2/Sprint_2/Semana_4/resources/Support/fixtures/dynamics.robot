@@ -30,8 +30,9 @@ Gerar id alfanumerico
     RETURN    ${id_dinamico}
 
 Gerar Senha aleatoria
-    ${tamanho} =  FakerLibrary.Random Int    min=10    max=25
-    ${senha}=    FakerLibrary.Password    length=${tamanho}    
+    [Documentation]    nao usar a faker aqui porque ela gera caracteres problematicos para a execuçao do test robot
+    ${tamanho}=    FakerLibrary.Random Int    min=10    max=25
+    ${senha}=    Generate Random String    ${tamanho}    [LETTERS][NUMBERS]
     RETURN    ${senha}
 
 Gerar email aleatorio valido

@@ -1,0 +1,89 @@
+Descritivo
+Neste desafio, você vai aplicar GenAI e Engenharia de Prompt para melhorar significativamente o plano de testes já criado nos Challenges anteriores, aumentar a cobertura (funcional, negativa, contrato e regras de negócio) e expandir a automação de testes de API com Robot Framework, usando GenAI como acelerador — sem abrir mão de validação humana e rastreabilidade.
+
+API alvo: https://compassuol.serverest.dev/
+
+Entrada obrigatória: repositório do Challenge 02 (plano, bugs, automação existente).
+
+Atividades Obrigatórias
+1) Engenharia de Prompt e Rastreabilidade do Uso de IA
+Você deve demonstrar que sabe pedir bem e validar o que a IA entrega.
+Obrigatório entregar um “Prompt Log” contendo:
+- objetivo do prompt (ex.: gerar cenários negativos para /usuarios)
+- contexto fornecido (recorte do plano atual, endpoints, regras)
+- prompt final (versão “boa”)
+- resposta da IA (resumo do resultado)
+- o que você ajustou/validou manualmente (correções, removidos, refinados)
+- critérios de validação usados (ex.: checar se o endpoint existe, se a regra faz sentido, se o contrato bate)
+
+Requisitos mínimos do Prompt Log
+Pelo menos 8 prompts bem diferentes, cobrindo:
+- expansão de cenários (positivos/negativos)
+- testes de contrato (estrutura/campos)
+- critérios de aceite/regras de negócio
+- geração/refatoração de automação Robot
+- melhoria de qualidade do plano (clareza, pré-condições, dados, oráculos)
+
+2) Evolução do Plano de Testes (qualidade + cobertura)
+Você deve evoluir o plano para ficar mais completo, mais verificável e mais executável.
+
+Obrigatório:
+Melhorar a qualidade dos casos (oráculo claro, dados de teste, passos objetivos, pré/pós-condições)
+
+Aumentar a cobertura com foco em:
+- cenários negativos e validações
+- contrato (campos obrigatórios, tipos básicos, mensagens/erros coerentes)
+- regras de negócio (consistência e limites)
+- risco (priorização e criticidade)
+
+Criar/atualizar uma matriz de cobertura (endpoint × tipo de teste) mostrando lacunas preenchidas.
+Evidenciar “antes vs depois” (quantidade e cobertura por endpoint/tipo)
+
+3) Expansão da Automação com Robot Framework usando GenAI
+Aqui o foco é usar GenAI para acelerar criação/refino de automação, mantendo testes legíveis e confiáveis.
+Obrigatório:
+Criar no mínimo +10 novos checks automatizados (além do que já existe), cobrindo:
+- mín. 4 positivos
+- mín. 4 negativos
+ -mín. 2 de contrato básico
+
+A automação deve estar organizada (recursos, keywords, variáveis, dados).
+Cada teste automatizado deve ter link/rastreio para o caso no plano (ID/Referência).
+Boas práticas mínimas (avaliadas)
+Keywords reutilizáveis (ex.: “Criar Usuário”, “Autenticar”, “Validar Erro 400”)
+Dados parametrizados (evitar hardcode excessivo)
+Asserções objetivas (status code + conteúdo essencial)
+Evidência de execução (log/report) versionada ou anexada no PDF
+
+4) Git como evidência do processo
+O repositório deve refletir o trabalho real:
+- Branch dedicada (ex.: feature/challenge03-genai)
+- Commits pequenos e claros (ex.: test: add negative cases for users)
+- PR/MR com descrição do que melhorou (plano + automação)
+- Tag final: v1.0-challenge03 (ou similar)
+
+Desafio Extra
+Escolha 1 (ou mais):
+- Pipeline CI rodando Robot a cada push/PR (com artefatos de report) no Github Actions
+- “Quality Gate de IA”: checklist automático/manual indicando como você mitigou:
+- alucinações (endpoint inexistente, regras inventadas)
+- inconsistências (oráculos fracos, asserts inúteis)
+- Suite data-driven (massa gerada/variada) com foco em limites e combinações
+
+Forma de Entrega
+Entrega técnica (Moodle)
+Enviar:
+Link do repositório (ou ZIP)
+PDF contendo:
+- resumo do que mudou no plano (antes vs depois)
+- matriz de cobertura (endpoint × tipo de teste)
+- lista dos novos casos adicionados (com IDs)
+- lista dos novos testes automatizados (com caminho no repo)
+- evidências de execução (reports/logs/prints)
+- Prompt Log (pode ser no PDF ou anexado como .md no repo e referenciado no PDF)
+
+Apresentação (até 7 minutos)
+Sem PPT obrigatório. Demonstrar:
+- 1 min: visão do repo (estrutura e Git/PR)
+- 2–3 min: principais melhorias do plano e matriz de cobertura
+- 2–3 min: execução dos testes automatizados + 1 exemplo de prompt que gerou/refinou automação
