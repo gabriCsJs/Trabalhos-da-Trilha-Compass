@@ -81,7 +81,8 @@ Falhar em editar produto: ID de produto inexistente
     ${mensagem}=  PUT     ${ROTA_PRODUTOS}    ${id_de_produto_falso}    ${payload}    400   ${Authorization_de_um_adm}
 
 Falhar em editar produto: authorization invalida
-    [Arguments]    ${id_de_produto}=${ID_Produto} 
+    [Arguments]    ${Authorization}=${Adm_authorization}
+    ${id_de_produto}=   Cadastrar produto dinamico valido    ${Authorization}    ${False}
     ${id_de_usuario_falso}=    Gerar id alfanumerico
     ${payload}=    Criar dados para produtos validos
     ${mensagem}=  PUT     ${ROTA_PRODUTOS}    ${id_de_produto}    ${payload}    401   ${id_de_usuario_falso}

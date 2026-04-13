@@ -55,5 +55,9 @@ Ct-Neg-11-Produto-PUT
     [Documentation]    logue com um usuário com privilégios administrativos e espero o tempo de expiração do token e tente editar um produto
     [Tags]    Negativo
     Falhar em editar produto: authorization expirada
+Ct-Neg-12-Produto-PUT
+    [Documentation]   gere um token artificial e tente editar um produto
+    [Tags]    Negativo
+    Falhar em editar produto: authorization invalida
 #---------------CONTRATO-----------------#
 #---------------NEGOCIO------------------#

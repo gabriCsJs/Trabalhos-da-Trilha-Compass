@@ -27,5 +27,9 @@ CT-Pos-12-Carrinho-delete
     Cancelar compra com carrinho associado ao usuario com sucesso    ${Cliente_authorization}
 
 #---------------NEGATIVOS----------------#
+Ct-Neg-13-Carrinho-Post
+    [Documentation]    Crie um carrinho vinculado a um usuário válido contendo um produto duplicado
+    [Tags]    Negativo
+    Cadastrar carrinho com o produto repetido
 #---------------CONTRATO-----------------#
 #---------------NEGOCIO------------------#
