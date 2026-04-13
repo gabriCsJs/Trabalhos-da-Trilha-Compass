@@ -1,0 +1,82 @@
+{
+    "validos": {
+        "produto_Valido1": {
+            "nome": "Notebook Gamer Pro",
+            "preco": 4500,
+            "descricao": "Notebook com RTX 4060 e 16GB RAM",
+            "quantidade": 10
+        },
+        "produto_Valido2": {
+            "nome": "Mouse Gamer Pro",
+            "preco": 300,
+            "descricao": "Mouse com sensor óptico 16000 DPI",
+            "quantidade": 50
+        },
+        "produto_preco_minimo": {
+            "nome": "Cabo USB Simples",
+            "preco": 1,
+            "descricao": "Cabo USB-A para USB-C",
+            "quantidade": 100
+        },
+        "produto_quantidade_um": {
+            "nome": "Monitor Ultrawide 34",
+            "preco": 3200,
+            "descricao": "Monitor curvo 34 polegadas 144Hz",
+            "quantidade": 1
+        },
+        "produto_descricao_longa": {
+            "nome": "Teclado Mecânico RGB",
+            "preco": 450,
+            "descricao": "Teclado mecânico com switches blue, iluminação RGB por tecla, layout ABNT2, anti-ghosting e cabo removível",
+            "quantidade": 25
+        }
+    },
+    "invalidos": {
+        "produto_sem_nome": {
+            "nome": "",
+            "preco": 4500,
+            "descricao": "Notebook com RTX 4060 e 16GB RAM",
+            "quantidade": 10
+        },
+        "produto_sem_dados": {
+            "nome": "",
+            "preco": "",
+            "descricao": "",
+            "quantidade": ""
+        },
+        "produto_preco_string": {
+            "nome": "Headset Gamer",
+            "preco": "trezentos",
+            "descricao": "Headset com microfone",
+            "quantidade": 15
+        },
+        "produto_quantidade_negativa": {
+            "nome": "Webcam HD",
+            "preco": 250,
+            "descricao": "Webcam 1080p com microfone embutido",
+            "quantidade": -1
+        },
+        "produto_quantidade_string": {
+            "nome": "SSD 1TB",
+            "preco": 600,
+            "descricao": "SSD NVMe M.2",
+            "quantidade": "dez"
+        },
+        "produto_sem_preco": {
+            "nome": "Placa de Vídeo RTX 4070",
+            "descricao": "GPU para jogos em 4K",
+            "quantidade": 5
+        },
+        "produto_sem_quantidade": {
+            "nome": "Fonte 750W",
+            "preco": 550,
+            "descricao": "Fonte modular 80 Plus Gold"
+        },
+        "produto_preco_zero": {
+            "nome": "Mousepad Simples",
+            "preco": 0,
+            "descricao": "Mousepad 30x25cm",
+            "quantidade": 30
+        }
+    }
+}

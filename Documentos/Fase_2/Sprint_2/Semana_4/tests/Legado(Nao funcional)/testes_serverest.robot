@@ -1,5 +1,6 @@
 *** Settings ***
-Resource  ../resources/Base/Configuracao.resource
+Resource  ../resources/Support/Bases/Configuracao.resource
+Resource  ../resources/Support/fixtures/dynamics.robot
 Suite Setup       Run Keywords    Iniciar Sessao API    AND    Criar Massa de Dados da Suite
 Suite Teardown    Run Keywords    Limpar Massa de dados    AND    Encerrar Sessao API
 Library    Collections
@@ -10,28 +11,7 @@ ${quantidade}
 
 *** Test Cases ***
 
-Validar estrutura do JSON de Produto
-    [Documentation]    Verifica se a API retorna os campos obrigatórios na busca de um produto.
-    [Tags]             contrato    produtos
-    # Fazemos a busca do produto criado no Setup
-    ${resposta}=    Buscar produto por id    ${ID_Produto}
-    
-    Dictionary Should Contain Key    ${resposta}    nome
-    Dictionary Should Contain Key    ${resposta}    preco
-    Dictionary Should Contain Key    ${resposta}    descricao
-    Dictionary Should Contain Key    ${resposta}    quantidade
-    Dictionary Should Contain Key    ${resposta}    _id
 
-Validar estrutura do JSON de Usuario
-    [Documentation]    Verifica se a API retorna os campos obrigatórios na busca de um Usuario.
-    [Tags]             contrato    usuarios
-    # Fazemos a busca do produto criado no Setup
-    ${resposta}=    Buscar Usuario por ID    ${ID_Cliente}
-    Dictionary Should Contain Key    ${resposta}    nome
-    Dictionary Should Contain Key    ${resposta}    email
-    Dictionary Should Contain Key    ${resposta}    password
-    Dictionary Should Contain Key    ${resposta}    administrador
-    Dictionary Should Contain Key    ${resposta}    _id
 
 Cenario Positivo 01: Manipulacao de produtos
     [Tags]     Positivo  produtos  contrato
